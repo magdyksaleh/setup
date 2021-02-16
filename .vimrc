@@ -42,6 +42,8 @@ command! -bang -nargs=* Find call fzf#vim#grep('rg --column --line-number --no-h
 :command Wq wq
 :command W w
 
+nnoremap <Leader>b oimport pdb; pdb.set_trace()<Esc>
+
 nnoremap <Leader>s :update<cr>
 inoremap <Leader>s <Esc>:update<cr>
 
