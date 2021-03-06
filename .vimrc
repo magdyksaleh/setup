@@ -77,6 +77,7 @@ Plugin 'junegunn/fzf.vim'
 Plugin 'itchyny/lightline.vim'
 Plugin 'sjl/badwolf'
 Plugin 'mileszs/ack.vim'
+Plugin 'christoomey/vim-tmux-navigator'
 call vundle#end()
 let g:badwolf_darkgutter = 1
 

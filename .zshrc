@@ -139,6 +139,7 @@ alias run_native="docker_clean; cd && ./dossier/tools/local_cluster_with_telepho
 alias vf='vim $(fzf)'
 
 alias ta="tmux a "
+alias c="clear"
 alias tls="tmux ls"
 alias tnew="tmux new-session -t"
 alias deploy="/home/magdy/dossier/management/kubernetes/deploy_sift.py" 
