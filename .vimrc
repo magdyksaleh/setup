@@ -67,19 +67,17 @@ autocmd Filetype scss setlocal expandtab tabstop=2 shiftwidth=2 softtabstop=2
 
 set nocompatible
 set runtimepath+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
-Plugin 'VundleVim/Vundle.vim'
+call plug#begin("~/.vim/plugged")
 
 " Add plugins here
 set rtp+=~/.fzf
-Plugin 'tpope/vim-surround'
-Plugin 'junegunn/fzf.vim'
-Plugin 'itchyny/lightline.vim'
-Plugin 'sjl/badwolf'
-Plugin 'mileszs/ack.vim'
-Plugin 'christoomey/vim-tmux-navigator'
-call vundle#end()
-let g:badwolf_darkgutter = 1
+Plug 'tpope/vim-surround'
+Plug 'junegunn/fzf.vim'
+Plug 'itchyny/lightline.vim'
+Plug 'sjl/badwolf'
+Plug 'mileszs/ack.vim'
+Plug 'christoomey/vim-tmux-navigator'
+call plug#end()
 
 " coc nvim   
 let g:coc_disable_startup_warning = 1

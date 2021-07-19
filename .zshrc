@@ -8,7 +8,7 @@ export ZSH=$HOME/.oh-my-zsh
 # load a random theme each time oh-my-zsh is loaded, in which case,
 # to know which specific one was loaded, run: echo $RANDOM_THEME
 # See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
-ZSH_THEME="robbyrussell"
+ZSH_THEME="powerlevel10k/powerlevel10k"
 
 # Set list of themes to pick from when loading at random
 # Setting this variable when ZSH_THEME=random will cause zsh to load
@@ -77,7 +77,6 @@ export WORKON_HOME=/home/magdy/.virtualenvs
 export PROJECT_HOME=/home/magdy/Devel
 export DJANGO_SETTINGS_MODULE=zenapi.settings_local
 export PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/home/magdy/.local/bin:/usr/local/cuda-10.2/bin"
-source /home/magdy/.local/bin/virtualenvwrapper.sh
 export LD_LIBRARY_PATH="/usr/local/"
 export BUCKET_ROOT="gridspace-models-dev"
 export MANIFEST_PATH="/home/magdy/dossier/zenapi/server/base/models-manifest.txt"
@@ -172,3 +171,6 @@ function p () {
 }  
   
   
+
+# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
