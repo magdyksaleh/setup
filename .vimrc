@@ -74,9 +74,8 @@ set rtp+=~/.fzf
 Plug 'tpope/vim-surround'
 Plug 'junegunn/fzf.vim'
 Plug 'itchyny/lightline.vim'
-Plug 'sjl/badwolf'
-Plug 'mileszs/ack.vim'
 Plug 'christoomey/vim-tmux-navigator'
+Plug 'sheerun/vim-polyglot'
 call plug#end()
 
 " coc nvim   
