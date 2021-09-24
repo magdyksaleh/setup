@@ -68,13 +68,10 @@ HIST_STAMPS="mm/dd/yyyy"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git)
-plugins=(zsh-autosuggestions)
+plugins=(git zsh-autosuggestions)
 
 source $ZSH/oh-my-zsh.sh
 
-export WORKON_HOME=/home/magdy/.virtualenvs
-export PROJECT_HOME=/home/magdy/Devel
 export DJANGO_SETTINGS_MODULE=zenapi.settings_local
 export PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/home/magdy/.local/bin:/usr/local/cuda-10.2/bin"
 export LD_LIBRARY_PATH="/usr/local/"
@@ -84,7 +81,7 @@ export TARGET_DIR="/home/magdy/dossier/_dockercache/nlpbin"
 export MODELS_ROOT_DIR="/home/magdy/dossier/_dockercache/nlpbin"
 export EDITOR=vim
 export PATH=$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH
-source ~/.virtualenvs/siftenv/bin/activate
+source ~/.virtualenvs/pyenv/bin/activate
 
 export USE_CUSTOM_USAA_W2V=1
 export ZSH_AUTOSUGGEST_USE_ASYNC=1
@@ -133,35 +130,22 @@ alias kcgp='kubectl get pods'
 alias ffile='find . | grep'
 alias glog='python /home/magdy/dossier/tools/glog/glog.py'
 alias zenapi='cd /home/magdy/dossier/zenapi'
-alias docker_clean="docker stop \$(docker ps -aq)"
-alias run_native="docker_clean; cd && ./dossier/tools/local_cluster_with_telephony.sh && cd - "
+alias docker-clean="docker stop \$(docker ps -aq)"
+alias run_native="docker-clean; cd && python ~/dossier/tools/local_cluster.py && cd - "
 alias vf='vim $(fzf)'
 
 alias ta="tmux a "
-alias c="clear"
 alias tls="tmux ls"
-alias tnew="tmux new-session -t"
 alias deploy="/home/magdy/dossier/management/kubernetes/deploy_sift.py" 
 alias test_aws="python /home/magdy/Documents/testing/call_amazon_via_api.py"
 alias webrtc_clean="ps -ax | grep webrtc | awk '{print $1}' | xargs kill"
+alias sc="systemctl"
 
 # Add an "alert" alias for long running commands.  Use like so:
 alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
 
 
-# The next line updates PATH for the Google Cloud SDK.
-if [ -f '/home/magdy/google-cloud-sdk/path.zsh.inc' ]; then . '/home/magdy/google-cloud-sdk/path.zsh.inc'; fi
-
-# The next line enables shell command completion for gcloud.
-if [ -f '/home/magdy/google-cloud-sdk/completion.zsh.inc' ]; then . '/home/magdy/google-cloud-sdk/completion.zsh.inc'; fi
-
-
-
-if [ /home/magdy/google-cloud-sdk/bin/kubectl ]; then source <(kubectl completion zsh); fi
-
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-
-
 function p () {
    if pwd | grep 'zenapi'; then
 		/home/magdy/dossier/zenapi/manage.py shell
@@ -169,8 +153,14 @@ function p () {
       ipython
    fi
 }  
-  
-  
 
-# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
-[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f '/home/magdy/google-cloud-sdk/path.zsh.inc' ]; then . '/home/magdy/google-cloud-sdk/path.zsh.inc'; fi
+
+# The next line enables shell command completion for gcloud.
+if [ -f '/home/magdy/google-cloud-sdk/completion.zsh.inc' ]; then . '/home/magdy/google-cloud-sdk/completion.zsh.inc'; fi
+
+if [ /home/magdy/google-cloud-sdk/bin/kubectl ]; then source <(kubectl completion zsh); fi
+
+
+
