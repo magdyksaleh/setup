@@ -73,15 +73,20 @@ plugins=(git zsh-autosuggestions)
 source $ZSH/oh-my-zsh.sh
 
 export DJANGO_SETTINGS_MODULE=zenapi.settings_local
-export PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/home/magdy/.local/bin:/usr/local/cuda-10.2/bin"
-export LD_LIBRARY_PATH="/usr/local/"
+export PATH="/usr/local/go/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/home/magdy/.local/bin:"
 export BUCKET_ROOT="gridspace-models-dev"
 export MANIFEST_PATH="/home/magdy/dossier/zenapi/server/base/models-manifest.txt"
 export TARGET_DIR="/home/magdy/dossier/_dockercache/nlpbin"
 export MODELS_ROOT_DIR="/home/magdy/dossier/_dockercache/nlpbin"
 export EDITOR=vim
 export PATH=$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH
-source ~/.virtualenvs/pyenv/bin/activate
+export PATH=/usr/local/cuda-11.1/bin:$PATH
+export LD_LIBRARY_PATH=/usr/local/cuda-11.1/lib64:$LD_LIBRARY_PATH
+export CUDA_HOME=/usr/local/cuda/
+export XLA_PYTHON_CLIENT_MEM_FRACTION=.7
+
+source ~/.virtualenvs/pyenv/bin/activate 
+# source ~/.virtualenvs/researchenv/bin/activate
 
 export USE_CUSTOM_USAA_W2V=1
 export ZSH_AUTOSUGGEST_USE_ASYNC=1
@@ -128,7 +133,7 @@ alias dossier='cd /home/magdy/dossier'
 alias kc='kubectl'
 alias kcgp='kubectl get pods'
 alias ffile='find . | grep'
-alias glog='python /home/magdy/dossier/tools/glog/glog.py'
+alias glog='unset GOOGLE_APPLICATION_CREDENTIALS && python /home/magdy/dossier/tools/glog/glog.py'
 alias zenapi='cd /home/magdy/dossier/zenapi'
 alias docker-clean="docker stop \$(docker ps -aq)"
 alias run_native="docker-clean; cd && python ~/dossier/tools/local_cluster.py && cd - "
@@ -140,6 +145,12 @@ alias deploy="/home/magdy/dossier/management/kubernetes/deploy_sift.py"
 alias test_aws="python /home/magdy/Documents/testing/call_amazon_via_api.py"
 alias webrtc_clean="ps -ax | grep webrtc | awk '{print $1}' | xargs kill"
 alias sc="systemctl"
+alias renv=". ~/.virtualenvs/researchenv/bin/activate"
+alias lg="lazygit"
+
+function watch-pods() {
+   watch -n 0.5 kubectl get pods -lapp $1
+}
 
 # Add an "alert" alias for long running commands.  Use like so:
 alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
@@ -162,5 +173,5 @@ if [ -f '/home/magdy/google-cloud-sdk/completion.zsh.inc' ]; then . '/home/magdy
 
 if [ /home/magdy/google-cloud-sdk/bin/kubectl ]; then source <(kubectl completion zsh); fi
 
-
-
+# opam configuration
+test -r /home/magdy/.opam/opam-init/init.zsh && . /home/magdy/.opam/opam-init/init.zsh > /dev/null 2> /dev/null || true
