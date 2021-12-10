@@ -1,3 +1,4 @@
+
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
@@ -113,7 +114,7 @@ export ZSH_AUTOSUGGEST_USE_ASYNC=1
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
 # enable color support of ls and also add handy aliases
-alias ls='ls --color=auto'
+# alias ls='ls --color=auto'
 #alias dir='dir --color=auto'
 #alias vdir='vdir --color=auto'
 alias grep='grep --color=auto'
@@ -128,7 +129,7 @@ alias dossier='cd /home/magdy/dossier'
 alias kc='kubectl'
 alias kcgp='kubectl get pods'
 alias ffile='find . | grep'
-alias glog='python /home/magdy/dossier/tools/glog/glog.py'
+alias glog='python /Users/magdy/dossier/tools/glog/glog.py'
 alias zenapi='cd /home/magdy/dossier/zenapi'
 alias docker-clean="docker stop \$(docker ps -aq)"
 alias run_native="docker-clean; cd && python ~/dossier/tools/local_cluster.py && cd - "
@@ -136,7 +137,7 @@ alias vf='vim $(fzf)'
 
 alias ta="tmux a "
 alias tls="tmux ls"
-alias deploy="/home/magdy/dossier/management/kubernetes/deploy_sift.py" 
+alias deploy="/Users/magdy/dossier/management/kubernetes/deploy_sift.py" 
 alias test_aws="python /home/magdy/Documents/testing/call_amazon_via_api.py"
 alias webrtc_clean="ps -ax | grep webrtc | awk '{print $1}' | xargs kill"
 alias sc="systemctl"
@@ -154,13 +155,21 @@ function p () {
    fi
 }  
 
-# The next line updates PATH for the Google Cloud SDK.
-if [ -f '/home/magdy/google-cloud-sdk/path.zsh.inc' ]; then . '/home/magdy/google-cloud-sdk/path.zsh.inc'; fi
-
-# The next line enables shell command completion for gcloud.
-if [ -f '/home/magdy/google-cloud-sdk/completion.zsh.inc' ]; then . '/home/magdy/google-cloud-sdk/completion.zsh.inc'; fi
-
 if [ /home/magdy/google-cloud-sdk/bin/kubectl ]; then source <(kubectl completion zsh); fi
 
+e () {
+   local NETWORK_NAME=$(/Sy*/L*/Priv*/Apple8*/V*/C*/R*/airport -I | awk '/ SSID:/ {print $2}')
+   if [[ $NETWORK_NAME == "Grindspace" ]]
+   then 
+      ssh magdy@skynet3
+   else
+      tsh ssh --proxy=teleport2.gridspace.com:3080 --cluster=bigboi magdy@skynet3
+   fi
+}
 
 
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f '/Users/magdy/google-cloud-sdk/path.zsh.inc' ]; then . '/Users/magdy/google-cloud-sdk/path.zsh.inc'; fi
+
+# The next line enables shell command completion for gcloud.
+if [ -f '/Users/magdy/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/magdy/google-cloud-sdk/completion.zsh.inc'; fi
