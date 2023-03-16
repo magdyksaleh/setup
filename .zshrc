@@ -1,20 +1,16 @@
 
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
-
 # Path to your oh-my-zsh installation.
 export ZSH=$HOME/.oh-my-zsh
 
-# Set name of the theme to load --- if set to "random", it will
-# load a random theme each time oh-my-zsh is loaded, in which case,
+# Set name of the theme to load --- if set to "random", it will load a random theme each time oh-my-zsh is loaded, in which case,
 # to know which specific one was loaded, run: echo $RANDOM_THEME
 # See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
 ZSH_THEME="robbyrussell"
 
 # Set list of themes to pick from when loading at random
-# Setting this variable when ZSH_THEME=random will cause zsh to load
-# a theme from this variable instead of looking in ~/.oh-my-zsh/themes/
-# If set to an empty array, this variable will have no effect.
+# Setting this variable when ZSH_THEME=random will cause zsh to load a theme from this variable instead of looking in ~/.oh-my-zsh/themes/ If set to an empty array, this variable will have no effect.
 # ZSH_THEME_RANDOM_CANDIDATES=( "robbyrussell" "agnoster" )
 
 # Uncomment the following line to use case-sensitive completion.
@@ -51,7 +47,7 @@ ZSH_THEME="robbyrussell"
 # Uncomment the following line if you want to disable marking untracked files
 # under VCS as dirty. This makes repository status check for large repositories
 # much, much faster.
-DISABLE_UNTRACKED_FILES_DIRTY="true"
+DISABLE_UNTRACKED_FILES_DIRTY="false"
 
 # Uncomment the following line if you want to change the command execution time
 # stamp shown in the history command output.
@@ -69,28 +65,10 @@ HIST_STAMPS="mm/dd/yyyy"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git zsh-autosuggestions)
+plugins=(git zsh-autosuggestions kube-ps1)
 
 source $ZSH/oh-my-zsh.sh
-
-export DJANGO_SETTINGS_MODULE=zenapi.settings_local
-export PATH="/usr/local/go/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/home/magdy/.local/bin:"
-export BUCKET_ROOT="gridspace-models-dev"
-export MANIFEST_PATH="/home/magdy/dossier/zenapi/server/base/models-manifest.txt"
-export TARGET_DIR="/home/magdy/dossier/_dockercache/nlpbin"
-export MODELS_ROOT_DIR="/home/magdy/dossier/_dockercache/nlpbin"
-export EDITOR=vim
-export PATH=$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH
-export PATH=/usr/local/cuda-11.1/bin:$PATH
-export LD_LIBRARY_PATH=/usr/local/cuda-11.1/lib64:$LD_LIBRARY_PATH
-export CUDA_HOME=/usr/local/cuda/
-export XLA_PYTHON_CLIENT_MEM_FRACTION=.7
-
-source ~/.virtualenvs/pyenv/bin/activate 
-# source ~/.virtualenvs/researchenv/bin/activate
-
-export USE_CUSTOM_USAA_W2V=1
-export ZSH_AUTOSUGGEST_USE_ASYNC=1
+source ~/.envvars.sh
 
 # User configuration
 
@@ -134,45 +112,44 @@ alias dossier='cd /home/magdy/dossier'
 alias kc='kubectl'
 alias kcgp='kubectl get pods'
 alias ffile='find . | grep'
-alias glog='unset GOOGLE_APPLICATION_CREDENTIALS && python /home/magdy/dossier/tools/glog/glog.py'
-alias zenapi='cd /home/magdy/dossier/zenapi'
 alias docker-clean="docker stop \$(docker ps -aq)"
-alias run_native="docker-clean; cd && python ~/dossier/tools/local_cluster.py && cd - "
 alias vf='vim $(fzf)'
 
 alias ta="tmux a "
 alias tls="tmux ls"
-alias deploy="/Users/magdy/dossier/management/kubernetes/deploy_sift.py" 
-alias test_aws="python /home/magdy/Documents/testing/call_amazon_via_api.py"
-alias webrtc_clean="ps -ax | grep webrtc | awk '{print $1}' | xargs kill"
 alias sc="systemctl"
-alias renv=". ~/.virtualenvs/researchenv/bin/activate"
 alias lg="lazygit"
+alias predigo="cd ~/predibase/server && source ../scripts/local_env.sh && go build && ./predibase"
+alias rdb="ray debug"
+alias rsv="cd ~/predibase/engine && source ../scripts/local_env.sh && python predibase_engine/ray_serve.py --local --activities"
+alias branches="git branch --sort=-committerdate | cat | fzf"
+alias kcx='kc exec -it $(/Users/magdy/scripts/get_pods_fzf.sh) -- bash'
+alias kcd='kc describe pod $(/Users/magdy/scripts/get_pods_fzf.sh)'
+alias kcl='kc logs $(/Users/magdy/scripts/get_pods_fzf.sh)'
+alias kclf='kc logs $(/Users/magdy/scripts/get_pods_fzf.sh) -f'
+alias kx="kubectx"
+alias kn="kubens"
+alias awsenv="python /Users/magdy/aws-envs/env-selector.py"
+alias localsetup="python /Users/magdy/scripts/local-setup.py /Users/magdy/predibase"
+alias gcb='git checkout $(branches)'
 
-function watch-pods() {
-   watch -n 0.5 kubectl get pods -lapp $1
-}
+source ~/.cargo/env
 
-# Add an "alert" alias for long running commands.  Use like so:
-alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
+alias ludwigEnv=". ~/.virtualenvs/ludwig/bin/activate"
+
+# source ~/.virtualenvs/ludwig/bin/activate
+source ~/.virtualenvs/py38env/bin/activate
+# source ~/.virtualenvs/py39env/bin/activate
+# source ~/.virtualenvs/intTestEnv/bin/activate
 
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-function p () {
-   if pwd | grep 'zenapi'; then
-		/home/magdy/dossier/zenapi/manage.py shell
-   else
-      ipython
-   fi
-}  
 
-if [ /home/magdy/google-cloud-sdk/bin/kubectl ]; then source <(kubectl completion zsh); fi
+[ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && \. "/opt/homebrew/opt/nvm/nvm.sh"  # This loads nvm
+[ -s "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm" ] && \. "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
 
-# opam configuration
-test -r /home/magdy/.opam/opam-init/init.zsh && . /home/magdy/.opam/opam-init/init.zsh > /dev/null 2> /dev/null || true
+# k8s autocomplete 
+source <(kubectl completion zsh)
+PROMPT='$(kube_ps1):'$PROMPT
 
-# The next line updates PATH for the Google Cloud SDK.
-if [ -f '/Users/magdy/google-cloud-sdk/path.zsh.inc' ]; then . '/Users/magdy/google-cloud-sdk/path.zsh.inc'; fi
 
-# The next line enables shell command completion for gcloud.
-if [ -f '/Users/magdy/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/magdy/google-cloud-sdk/completion.zsh.inc'; fi

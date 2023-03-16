@@ -23,7 +23,7 @@ nmap k gk
 
 "FZF
 :map <Leader>f :Files<CR>
-:map <Leader>F :Files ..<CR>
+:map <Leader>F :Files
 
 " Ripgrep
 " --column: Show column number
@@ -46,7 +46,7 @@ command! -bang -nargs=* FindCur call fzf#vim#grep('rg --column --line-number --n
 :command Wq wq
 :command W w
 
-nnoremap <Leader>b oimport pdb; pdb.set_trace()<Esc>
+nnoremap <Leader>b obreakpoint()<Esc>
 
 nnoremap <Leader>s :update<cr>
 inoremap <Leader>s <Esc>:update<cr>
@@ -64,6 +64,7 @@ nnoremap <Leader>c :Commentary<cr>
 inoremap <Leader>v :noh<cr>
 nnoremap <Leader>v :noh<cr>
 
+set runtimepath+=$GOROOT/misc/vim
 " Add Language Server Support 
 set hidden
 set runtimepath+=~/.vim/manual-plugins/LanguageClient-neovim
@@ -91,7 +92,8 @@ endif
 call plug#begin("~/.vim/plugged")
 
 " Add plugins here
-set rtp+=~/.fzf
+set rtp+=/opt/homebrew/opt/fzf
+Plug 'preservim/nerdtree'
 Plug 'tpope/vim-surround'
 Plug 'junegunn/fzf.vim'
 Plug 'itchyny/lightline.vim'
@@ -100,6 +102,7 @@ Plug 'tpope/vim-commentary'
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'sheerun/vim-polyglot'
 Plug 'tpope/vim-fugitive'
+Plug 'nvie/vim-flake8'
 Plug 'fatih/vim-go', {'do': ':GoUpdateBinaries'}
 call plug#end()
 
@@ -167,3 +170,5 @@ nmap <silent> gr <Plug>(coc-references)
 " split and open definition in tab
 nnoremap <silent> vd :call CocAction('jumpDefinition', 'vsplit')<CR>
 
+" Nerd Tree
+nnoremap <leader>n :NERDTreeToggle<CR>
