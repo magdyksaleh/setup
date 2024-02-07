@@ -64,7 +64,6 @@ nnoremap <Leader>c :Commentary<cr>
 inoremap <Leader>v :noh<cr>
 nnoremap <Leader>v :noh<cr>
 
-set runtimepath+=$GOROOT/misc/vim
 " Add Language Server Support 
 set hidden
 set runtimepath+=~/.vim/manual-plugins/LanguageClient-neovim
@@ -82,6 +81,15 @@ autocmd Filetype scss setlocal expandtab tabstop=2 shiftwidth=2 softtabstop=2
 
 set nocompatible
 set runtimepath+=~/.vim/bundle/Vundle.vim
+
+" Go stuff 
+set runtimepath+=$GOROOT/misc/vim
+let g:go_highlight_types = 1
+let g:go_highlight_fields = 1
+let g:go_highlight_functions = 1
+let g:go_highlight_function_calls = 1
+let g:go_highlight_extra_types = 1
+let g:go_highlight_operators = 1
 
 let data_dir = has('nvim') ? stdpath('data') . '/site' : '~/.vim'
 if empty(glob(data_dir . '/autoload/plug.vim'))

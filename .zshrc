@@ -109,7 +109,7 @@ alias la='ls -A'
 alias l='ls -CF'
 # custom aliases
 alias dossier='cd /home/magdy/dossier'
-alias kc='kubectl'
+alias k='kubectl'
 alias kcgp='kubectl get pods'
 alias ffile='find . | grep'
 alias docker-clean="docker stop \$(docker ps -aq)"
@@ -123,24 +123,26 @@ alias predigo="cd ~/predibase/server && source ../scripts/local_env.sh && go bui
 alias rdb="ray debug"
 alias rsv="cd ~/predibase/engine && source ../scripts/local_env.sh && python predibase_engine/ray_serve.py --local --activities"
 alias branches="git branch --sort=-committerdate | cat | fzf"
-alias kcx='kc exec -it $(/Users/magdy/scripts/get_pods_fzf.sh) -- bash'
-alias kcd='kc describe pod $(/Users/magdy/scripts/get_pods_fzf.sh)'
-alias kcl='kc logs $(/Users/magdy/scripts/get_pods_fzf.sh)'
-alias kclf='kc logs $(/Users/magdy/scripts/get_pods_fzf.sh) -f'
+alias kex='k exec -it $(/Users/magdy/scripts/get_pods_fzf.sh) -- bash'
+alias kd='k describe pod $(/Users/magdy/scripts/get_pods_fzf.sh)'
+alias kl='k logs $(/Users/magdy/scripts/get_pods_fzf.sh)'
+alias klf='k logs $(/Users/magdy/scripts/get_pods_fzf.sh) -f'
 alias kx="kubectx"
 alias kn="kubens"
 alias awsenv="python /Users/magdy/aws-envs/env-selector.py"
 alias localsetup="python /Users/magdy/scripts/local-setup.py /Users/magdy/predibase"
 alias gcb='git checkout $(branches)'
+alias c='clear'
 
 source ~/.cargo/env
 
 alias ludwigEnv=". ~/.virtualenvs/ludwig/bin/activate"
 
 # source ~/.virtualenvs/ludwig/bin/activate
-source ~/.virtualenvs/py38env/bin/activate
+# source ~/.virtualenvs/py38env/bin/activate
 # source ~/.virtualenvs/py39env/bin/activate
 # source ~/.virtualenvs/intTestEnv/bin/activate
+source ~/.virtualenvs/engineEnv/bin/activate
 
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
@@ -152,4 +154,38 @@ source ~/.virtualenvs/py38env/bin/activate
 source <(kubectl completion zsh)
 PROMPT='$(kube_ps1):'$PROMPT
 
+engine-logs () {
+  kubectl exec -it $1 -- /bin/bash -c "cat /tmp/ray/session_latest/logs/*.out"
+}
 
+istio-endpoints() {
+  current_namespace=`kubectl config view --minify -o jsonpath='{..namespace}'`
+  istioctl proxy-config endpoint $1.$current_namespace
+}
+
+istio-debug () {
+  istioctl x envoy-stats $1 --type clusters
+}
+
+gateway-logs() {
+  for pod in `kubectl get pods | grep "gateway" | awk '{print $1}'`; do
+    kubectl logs $pod
+  done
+}
+
+forward-engines() {
+  sudo kubefwd svc -l ray.io/node-type=head
+}
+
+forward-temporal-ui() {
+  sudo kubefwd svc -l app.kubernetes.io/component=web
+  current_namespace=`kubectl config view --minify -o jsonpath='{..namespace}'`
+}
+
+t() {
+  export PREDIBASE_API_TOKEN="$1"
+}
+
+senv() {
+  source ~/.virtualenvs/$(ls ~/.virtualenvs | fzf)/bin/activate
+}
