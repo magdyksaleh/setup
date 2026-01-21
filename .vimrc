@@ -100,9 +100,10 @@ endif
 call plug#begin("~/.vim/plugged")
 
 " Add plugins here
-set rtp+=/opt/homebrew/opt/fzf
 Plug 'preservim/nerdtree'
 Plug 'tpope/vim-surround'
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf.vim'
 Plug 'junegunn/fzf.vim'
 Plug 'itchyny/lightline.vim'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}

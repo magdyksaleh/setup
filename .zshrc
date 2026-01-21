@@ -65,7 +65,10 @@ HIST_STAMPS="mm/dd/yyyy"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git zsh-autosuggestions kube-ps1)
+
+# For k8s bash prompt enable kube-ps1
+# plugins=(git zsh-autosuggestions kube-ps1)
+plugins=(git zsh-autosuggestions)
 
 source $ZSH/oh-my-zsh.sh
 source ~/.envvars.sh
@@ -133,6 +136,14 @@ alias awsenv="python /Users/magdy/aws-envs/env-selector.py"
 alias localsetup="python /Users/magdy/scripts/local-setup.py /Users/magdy/predibase"
 alias gcb='git checkout $(branches)'
 alias c='clear'
+alias vim='nvim'
+alias uvr='uv run'
+alias django='uv run manage.py'
+
+alias migrate='uvr manage.py migrate'
+alias runserver='uvr manage.py runserver'
+alias makemigration='uvr manage.py makemigration'
+alias djshell='uvr manage.py shell'
 
 source ~/.cargo/env
 
@@ -142,8 +153,8 @@ alias ludwigEnv=". ~/.virtualenvs/ludwig/bin/activate"
 # source ~/.virtualenvs/py38env/bin/activate
 # source ~/.virtualenvs/py39env/bin/activate
 # source ~/.virtualenvs/intTestEnv/bin/activate
-source ~/.virtualenvs/engineEnv/bin/activate
-
+# source ~/.virtualenvs/engineEnv/bin/activate
+# source ~/.virtualenvs/loraxenv/bin/activate
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
@@ -151,8 +162,8 @@ source ~/.virtualenvs/engineEnv/bin/activate
 [ -s "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm" ] && \. "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
 
 # k8s autocomplete 
-source <(kubectl completion zsh)
-PROMPT='$(kube_ps1):'$PROMPT
+# source <(kubectl completion zsh)
+# PROMPT='$(kube_ps1):'$PROMPT
 
 engine-logs () {
   kubectl exec -it $1 -- /bin/bash -c "cat /tmp/ray/session_latest/logs/*.out"
@@ -165,6 +176,10 @@ istio-endpoints() {
 
 istio-debug () {
   istioctl x envoy-stats $1 --type clusters
+}
+
+ked() {
+  k edit deployment $(`k get deployments --no-headers | fzf | awk '{print $1}'`)
 }
 
 gateway-logs() {
@@ -187,5 +202,19 @@ t() {
 }
 
 senv() {
-  source ~/.virtualenvs/$(ls ~/.virtualenvs | fzf)/bin/activate
+  source ~/.virtualenvs/$(ls ~/.virtualenvs -1 | fzf)/bin/activate
 }
+
+. "$HOME/.local/bin/env"
+
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f '/Users/magdy/google-cloud-sdk/path.zsh.inc' ]; then . '/Users/magdy/google-cloud-sdk/path.zsh.inc'; fi
+
+# The next line enables shell command completion for gcloud.
+if [ -f '/Users/magdy/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/magdy/google-cloud-sdk/completion.zsh.inc'; fi
+
+source ~/fawkes/server/.venv/bin/activate
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+# Added by Antigravity
+export PATH="/Users/magdy/.antigravity/antigravity/bin:$PATH"
