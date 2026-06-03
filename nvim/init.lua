@@ -196,16 +196,23 @@ require("lazy").setup({
       vim.api.nvim_create_autocmd("LspAttach", {
         callback = function(ev)
           local opts = {buffer = ev.buf}
-          vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts)
-          vim.keymap.set("n", "gy", vim.lsp.buf.type_definition, opts)
-          vim.keymap.set("n", "gi", vim.lsp.buf.implementation, opts)
+          local function jump_to_first(options)
+            if options.items and #options.items > 0 then
+              local item = options.items[1]
+              vim.cmd("edit +" .. item.lnum .. " " .. vim.fn.fnameescape(item.filename))
+              vim.api.nvim_win_set_cursor(0, {item.lnum, item.col - 1})
+            end
+          end
+          vim.keymap.set("n", "gd", function() vim.lsp.buf.definition({ on_list = jump_to_first }) end, opts)
+          vim.keymap.set("n", "gy", function() vim.lsp.buf.type_definition({ on_list = jump_to_first }) end, opts)
+          vim.keymap.set("n", "gi", function() vim.lsp.buf.implementation({ on_list = jump_to_first }) end, opts)
           vim.keymap.set("n", "gr", vim.lsp.buf.references, opts)
           vim.keymap.set("n", "<F2>", vim.lsp.buf.rename, opts)
           vim.keymap.set("n", "<F5>", vim.lsp.buf.code_action, opts)
           vim.keymap.set("n", "<F8>",  vim.diagnostic.setloclist)
           vim.keymap.set("n", "vd", function()
             vim.cmd("vsplit")
-            vim.lsp.buf.definition()
+            vim.lsp.buf.definition({ on_list = jump_to_first }) 
           end, opts)
         end,
       })
@@ -232,6 +239,15 @@ require("lazy").setup({
         },
       })
     end
+  },
+
+  -- Vim practice game
+  {
+    "ThePrimeagen/vim-be-good",
+    cmd = "VimBeGood",
+    keys = {
+      { "<leader>vg", "<cmd>VimBeGood<cr>", desc = "Open VimBeGood" },
+    },
   },
 
   -- Other essential plugins
